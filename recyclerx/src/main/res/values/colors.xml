@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="khaltiPrimary">#4C276D</color>
-    <color name="khaltiPrimaryDark">#421D63</color>
-    <color name="khaltiAccent">#673ab7</color>
-    <color name="khaltiAccentAlt">#F79320</color>
+    <color name="primary">#607D8B</color>
+    <color name="primaryDark">#546E7A</color>
+    <color name="accent">#9E9E9E</color>
     <color name="bg">#07000000</color>
     <color name="grey">#FFE9E8E8</color>
 

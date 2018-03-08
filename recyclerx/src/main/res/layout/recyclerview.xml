@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cdlMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:id="@+id/svIndented"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <khalti.carbonX.widget.ProgressBar
+                android:id="@+id/pdLoad"
+                android:layout_width="150dp"
+                android:layout_height="4dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/cardPadding"
+                android:layout_marginLeft="@dimen/globalPadding"
+                android:layout_marginRight="@dimen/globalPadding"
+                android:background="@color/disabled"
+                app:carbonX_progressStyle="bar_indeterminate"
+                app:carbonX_tint="@color/accent" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tvMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:text="@string/empty"
+                android:textColor="@color/primaryText"
+                android:textSize="@dimen/body"
+                android:visibility="visible"
+                app:fontFamily="@font/roboto" />
+
+            <com.recyclerx.carbonX.widget.FrameLayout
+                android:id="@+id/flTryAgain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="@dimen/globalPadding"
+                android:visibility="invisible">
+
+                <com.recyclerx.carbonX.widget.Button
+                    android:id="@+id/btnTryAgain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/carbonX_buttonHeight"
+                    android:minHeight="@dimen/carbonX_buttonHeight"
+                    android:minWidth="@dimen/carbonX_buttonWidth"
+                    android:text="@string/try_again"
+                    android:textAppearance="@style/carbonX_TextAppearance.Button.Dark"
+                    app:carbonX_backgroundTint="@color/primary"
+                    app:carbonX_cornerRadius="2dp"
+                    app:carbonX_elevation="2dp"
+                    app:carbonX_rippleColor="@color/defaultRipple"
+                    app:carbonX_textAllCaps="true" />
+            </com.recyclerx.carbonX.widget.FrameLayout>
+        </LinearLayout>
+    </ScrollView>
+</android.support.design.widget.CoordinatorLayout>

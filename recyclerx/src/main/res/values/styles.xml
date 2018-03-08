@@ -6,9 +6,9 @@
     </style>
 
     <style name="AppTheme.khalti" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/khaltiPrimary</item>
-        <item name="colorPrimaryDark">@color/khaltiPrimaryDark</item>
-        <item name="colorAccent">@color/khaltiAccent</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorAccent">@color/accent</item>
 
         <item name="carbonX_colorError">#ffF44336</item>
         <item name="carbonX_debugMode">false</item>
@@ -25,7 +25,7 @@
     </style>
 
     <style name="ToolbarStyle" parent="@style/ThemeOverlay.AppCompat.ActionBar">
-        <item name="colorAccent">@color/khaltiPrimary</item>
+        <item name="colorAccent">@color/primary</item>
     </style>
 
     <style name="ToolbarTextStyle" parent="@style/Base.TextAppearance.AppCompat.Title">
@@ -38,7 +38,7 @@
         <item name="android:textSize">20sp</item>
 
         <item name="colorControlNormal">@color/primaryText</item>
-        <item name="colorControlActivated">@color/khaltiPrimary</item>
+        <item name="colorControlActivated">@color/primary</item>
     </style>
 
     <style name="carbonX_Theme.Light" parent="Theme.AppCompat.Light">
