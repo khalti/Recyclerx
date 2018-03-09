@@ -1,34 +1,77 @@
 apply plugin: 'com.android.library'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
-    compileSdkVersion 26
-
-
+    compileSdkVersion targetSdk
+    buildToolsVersion buildToolVersion
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion minSdk
+        targetSdkVersion targetSdk
+        versionCode khaltiVersionCode
+        versionName khaltiVersionName
+        renderscriptTargetApi renderScriptTarget
+        renderscriptSupportModeEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        vectorDrawables.useSupportLibrary = true
+        consumerProguardFiles 'proguard-rules.pro'
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+        options.addStringOption('encoding', 'UTF-8')
+        options.addStringOption('charSet', 'UTF-8')
+    }
+
+    retrolambda {
+        defaultMethods false
+        include 'Debug'
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    /*----Support Library----*/
+    implementation supportLibrary.recyclerView
+    implementation supportLibrary.design
+
+    /*Android Animations*/
+    implementation ui.nineoldanimations
+
+    /*ReactiveX*/
+    implementation rx.rxjava
+    implementation rx.rxandroid
+
+    /*RxBinding*/
+    implementation rx.rxBinding
+    implementation rx.rxAppCompatBinding
+
+    retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.5.3'
+    /*---------------------------------------------------------------------------------------------------------------------*/
+
+    /*Unit Testing*/
+    testImplementation test.junit
+    testImplementation test.mockito
+    testImplementation test.hamcrest
+    testImplementation test.powerMockJUnit
+    testImplementation test.powerMockMockito
 }
