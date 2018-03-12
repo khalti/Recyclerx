@@ -32,11 +32,10 @@ public class MainActivity extends AppCompatActivity {
         rvList.setErrorImage(R.drawable.ic_launcher_background);
         rvList.setLoadingImage(R.mipmap.cat);
         rvList.toggleLoading(true);
-//        rvList.setTryButtonColor(R.color.colorAccent);
         new Handler().postDelayed(() -> {
 //            rvList.toggleLoading(false);
             rvList.toggleError(true);
 //            rvList.setupList(new NameAdapter(this, names), new LinearLayoutManager(this));
-        }, 1000);
+        }, 10000);
     }
 }

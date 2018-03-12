@@ -199,7 +199,7 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
 
         @Override
         public void setProgressBarColor(int color) {
-            pdLoad.setTint(color);
+            pdLoad.setTint(getResources().getColorStateList(color));
         }
 
         @Override
