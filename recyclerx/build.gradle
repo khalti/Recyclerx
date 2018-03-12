@@ -63,7 +63,7 @@ dependencies {
 
     /*RxBinding*/
     implementation rx.rxBinding
-    implementation rx.rxAppCompatBinding
+    implementation rx.rxRecyclerBinding
 
     retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.5.3'
     /*---------------------------------------------------------------------------------------------------------------------*/

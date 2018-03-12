@@ -21,10 +21,10 @@ ext {
     rxAppCompatBindingVersion = "1.0.1"
 
     rx = [
-            rxjava            : "io.reactivex:rxjava:${rxVersion}",
-            rxandroid         : "io.reactivex:rxandroid:${rxAndroidVersion}",
-            rxBinding         : "com.jakewharton.rxbinding:rxbinding:${rxBinding}",
-            rxAppCompatBinding: "com.jakewharton.rxbinding:rxbinding-appcompat-v7:${rxAppCompatBindingVersion}"
+            rxjava           : "io.reactivex:rxjava:${rxVersion}",
+            rxandroid        : "io.reactivex:rxandroid:${rxAndroidVersion}",
+            rxBinding        : "com.jakewharton.rxbinding:rxbinding:${rxBinding}",
+            rxRecyclerBinding: "com.jakewharton.rxbinding:rxbinding-recyclerview-v7:${rxBinding}"
     ]
 
     junitVersion = '4.12'

@@ -36,6 +36,11 @@ public class NameAdapter extends RecyclerView.Adapter<NameAdapter.MyViewHolder> 
         return names.size();
     }
 
+    public void addMore(List<String> names) {
+        this.names = names;
+        notifyDataSetChanged();
+    }
+
     class MyViewHolder extends RecyclerView.ViewHolder {
         AppCompatTextView tvName;
 

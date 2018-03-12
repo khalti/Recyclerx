@@ -1,11 +1,18 @@
 package com.recyclerx.widget;
 
+import com.recyclerx.widget.listeners.OnLoadMoreListener;
+import com.recyclerx.widget.listeners.OnTryAgainListener;
+
+import java.util.HashMap;
+
+import rx.Observable;
+
 public interface RecyclerXContract {
     interface View {
 
         void setupList();
 
-        void toggleLoading(boolean show);
+        void toggleIndented(boolean show);
 
         void toggleProgressBar(boolean show);
 
@@ -19,9 +26,11 @@ public interface RecyclerXContract {
 
         void setTryButtonColor(int color);
 
-        Presenter getPresenter();
+        Observable<Void> setButtonClickListener();
 
-        void tryAgain();
+        Observable<HashMap<String, Integer>> addListScrollListener();
+
+        Presenter getPresenter();
 
         void setPresenter(Presenter presenter);
     }
@@ -46,6 +55,10 @@ public interface RecyclerXContract {
 
         void onSetTryButtonColor(int color);
 
-        void onTryAgain();
+        void onSetTryAgainListener(OnTryAgainListener onTryAgainListener);
+
+        void onSetListScrollListener(int pageQuantum, OnLoadMoreListener onLoadMoreListener);
+
+        void onDestroy();
     }
 }

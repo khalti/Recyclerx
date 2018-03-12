@@ -7,16 +7,27 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
+import com.jakewharton.rxbinding.view.RxView;
 import com.recyclerx.R;
 import com.recyclerx.carbonX.widget.Button;
 import com.recyclerx.carbonX.widget.ProgressBar;
 import com.recyclerx.utils.EmptyUtil;
+import com.recyclerx.widget.listeners.OnLoadMoreListener;
+import com.recyclerx.widget.listeners.OnTryAgainListener;
+
+import java.util.HashMap;
+
+import rx.Observable;
+import rx.subjects.PublishSubject;
+import rx.subscriptions.CompositeSubscription;
 
 public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
 
@@ -25,7 +36,7 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
     private RecyclerXContract.Presenter presenter;
     private android.support.v7.widget.RecyclerView.Adapter adapter;
     private android.support.v7.widget.RecyclerView.LayoutManager layoutManager;
-    private OnTryAgainListener onTryAgainListener;
+    private CompositeSubscription compositeSubscription;
 
     /*Views*/
     android.support.v7.widget.RecyclerView rvList;
@@ -115,11 +126,27 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
 
     @Override
     public void setOnTryAgainListener(OnTryAgainListener onTryAgainListener) {
-        this.onTryAgainListener = onTryAgainListener;
+        if (EmptyUtil.isNotNull(presenter)) {
+            presenter.onSetTryAgainListener(onTryAgainListener);
+        }
+    }
+
+    @Override
+    public void setOnScrollListener(int pageQuantum, OnLoadMoreListener onLoadMoreListener) {
+        if (EmptyUtil.isNotNull(presenter)) {
+            presenter.onSetListScrollListener(pageQuantum, onLoadMoreListener);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (EmptyUtil.isNotNull(presenter)) {
+            presenter.onDestroy();
+        }
     }
 
     private void init() {
-
+        compositeSubscription = new CompositeSubscription();
         @SuppressLint("CustomViewStyleable")
         TypedArray typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.app, 0, 0);
         String errorText = typedArray.getString(R.styleable.app_errorText);
@@ -151,8 +178,6 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
             presenter.onSetTryButtonColor(tryButtonColor);
             presenter.onSetErrorImage(errorImage);
             presenter.onSetLoadingImage(loadingImage);
-
-//            btnTryAgain.setOnClickListener(view -> presenter.onTryAgain());
         }
     }
 
@@ -172,7 +197,7 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
         }
 
         @Override
-        public void toggleLoading(boolean show) {
+        public void toggleIndented(boolean show) {
             nsvIndented.setVisibility(show ? VISIBLE : GONE);
             rvList.setVisibility(show ? GONE : VISIBLE);
         }
@@ -208,15 +233,37 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
         }
 
         @Override
-        public RecyclerXContract.Presenter getPresenter() {
-            return presenter;
+        public Observable<Void> setButtonClickListener() {
+            return RxView.clicks(btnTryAgain);
         }
 
         @Override
-        public void tryAgain() {
-            if (EmptyUtil.isNotNull(onTryAgainListener)) {
-                onTryAgainListener.onTryAgain();
-            }
+        public Observable<HashMap<String, Integer>> addListScrollListener() {
+            PublishSubject<HashMap<String, Integer>> scrollListener = PublishSubject.create();
+
+            compositeSubscription.add(RxRecyclerView.scrollEvents(rvList)
+                    .subscribe(recyclerViewScrollEvent -> {
+                        if (recyclerViewScrollEvent.dy() > 0) {
+                            int fp = 0;
+                            if (layoutManager instanceof LinearLayoutManager) {
+                                fp = ((LinearLayoutManager) layoutManager).findFirstVisibleItemPosition();
+                            }
+                            int finalFp = fp;
+                            scrollListener.onNext(new HashMap<String, Integer>() {{
+                                put("dy", recyclerViewScrollEvent.dy());
+                                put("past_visible_items", finalFp);
+                                put("visible_item_count", layoutManager.getChildCount());
+                                put("total_item_count", layoutManager.getItemCount());
+                            }});
+                        }
+
+                    }));
+            return scrollListener;
+        }
+
+        @Override
+        public RecyclerXContract.Presenter getPresenter() {
+            return presenter;
         }
 
         @Override
