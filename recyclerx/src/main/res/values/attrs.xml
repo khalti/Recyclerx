@@ -251,8 +251,12 @@
     </declare-styleable>
 
     <declare-styleable name="app">
-        <attr name="error_text" format="string" />
-        <attr name="loading_text" format="string" />
+        <attr name="errorText" format="string" />
+        <attr name="loadingText" format="string" />
+        <attr name="progressBarColor" format="reference|color" />
+        <attr name="tryButtonColor" format="reference|color" />
+        <attr name="loadingImage" format="reference" />
+        <attr name="errorImage" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="TextInputLayout">

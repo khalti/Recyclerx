@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cdlMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -12,8 +11,8 @@
         android:layout_height="match_parent"
         android:visibility="gone" />
 
-    <ScrollView
-        android:id="@+id/svIndented"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nsvIndented"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
@@ -24,6 +23,17 @@
             android:layout_gravity="center"
             android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/ivIndented"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/cardPadding"
+                android:adjustViewBounds="true"
+                android:animateLayoutChanges="true"
+                android:contentDescription="@null"
+                app:srcCompat="@drawable/ic_photo" />
+
             <khalti.carbonX.widget.ProgressBar
                 android:id="@+id/pdLoad"
                 android:layout_width="150dp"
@@ -32,6 +42,7 @@
                 android:layout_marginBottom="@dimen/cardPadding"
                 android:layout_marginLeft="@dimen/globalPadding"
                 android:layout_marginRight="@dimen/globalPadding"
+                android:animateLayoutChanges="true"
                 android:background="@color/disabled"
                 app:carbonX_progressStyle="bar_indeterminate"
                 app:carbonX_tint="@color/accent" />
@@ -43,6 +54,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
+                android:animateLayoutChanges="true"
                 android:text="@string/empty"
                 android:textColor="@color/primaryText"
                 android:textSize="@dimen/body"
@@ -54,6 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:animateLayoutChanges="true"
                 android:padding="@dimen/globalPadding"
                 android:visibility="invisible">
 
@@ -61,6 +74,7 @@
                     android:id="@+id/btnTryAgain"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/carbonX_buttonHeight"
+                    android:animateLayoutChanges="true"
                     android:minHeight="@dimen/carbonX_buttonHeight"
                     android:minWidth="@dimen/carbonX_buttonWidth"
                     android:text="@string/try_again"
@@ -72,5 +86,5 @@
                     app:carbonX_textAllCaps="true" />
             </com.recyclerx.carbonX.widget.FrameLayout>
         </LinearLayout>
-    </ScrollView>
-</android.support.design.widget.CoordinatorLayout>
+    </android.support.v4.widget.NestedScrollView>
+</FrameLayout>
