@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvList"
+        android:id="@+id/rxList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" />
@@ -34,7 +34,7 @@
                 android:contentDescription="@null"
                 app:srcCompat="@drawable/ic_photo" />
 
-            <khalti.carbonX.widget.ProgressBar
+            <com.recyclerx.carbonX.widget.ProgressBar
                 android:id="@+id/pdLoad"
                 android:layout_width="150dp"
                 android:layout_height="4dp"

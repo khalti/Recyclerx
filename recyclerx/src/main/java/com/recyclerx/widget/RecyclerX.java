@@ -18,7 +18,7 @@ import com.recyclerx.carbonX.widget.Button;
 import com.recyclerx.carbonX.widget.ProgressBar;
 import com.recyclerx.utils.EmptyUtil;
 
-public class RecyclerView extends FrameLayout implements RecyclerXProtocols {
+public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
 
     private Context context;
     private AttributeSet attributeSet;
@@ -36,13 +36,13 @@ public class RecyclerView extends FrameLayout implements RecyclerXProtocols {
     Button btnTryAgain;
     ImageView ivIndented;
 
-    public RecyclerView(@NonNull Context context) {
+    public RecyclerX(@NonNull Context context) {
         super(context);
         this.context = context;
         init();
     }
 
-    public RecyclerView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public RecyclerX(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         this.attributeSet = attrs;
@@ -137,14 +137,15 @@ public class RecyclerView extends FrameLayout implements RecyclerXProtocols {
         if (EmptyUtil.isNotNull(inflater)) {
             mainView = inflater.inflate(R.layout.recyclerview, this, true);
 
-            rvList = mainView.findViewById(R.id.rvList);
+            rvList = mainView.findViewById(R.id.rxList);
             nsvIndented = mainView.findViewById(R.id.nsvIndented);
             pdLoad = mainView.findViewById(R.id.pdLoad);
             tvMessage = mainView.findViewById(R.id.tvMessage);
             flTryAgain = mainView.findViewById(R.id.flTryAgain);
             ivIndented = mainView.findViewById(R.id.ivIndented);
+            btnTryAgain = mainView.findViewById(R.id.btnTryAgain);
 
-            presenter = new RecyclerX().getPresenter();
+            presenter = new RecyclerView().getPresenter();
             presenter.onSetErrorText(errorText);
             presenter.onSetLoadingText(loadingText);
             presenter.onSetProgressBarColor(progressBarColor);
@@ -156,11 +157,11 @@ public class RecyclerView extends FrameLayout implements RecyclerXProtocols {
         }
     }
 
-    private class RecyclerX implements RecyclerXContract.View {
+    private class RecyclerView implements RecyclerXContract.View {
 
         private RecyclerXContract.Presenter presenter;
 
-        RecyclerX() {
+        RecyclerView() {
             presenter = new RecyclerXPresenter(this);
         }
 
@@ -174,6 +175,7 @@ public class RecyclerView extends FrameLayout implements RecyclerXProtocols {
         @Override
         public void toggleLoading(boolean show) {
             nsvIndented.setVisibility(show ? VISIBLE : GONE);
+            rvList.setVisibility(show?GONE:VISIBLE);
         }
 
         @Override
