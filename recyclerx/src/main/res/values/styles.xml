@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="AppTheme.khalti">
+    <style name="AppTheme" parent="AppTheme.RecyclerX">
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="AppTheme.khalti" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primaryDark</item>
-        <item name="colorAccent">@color/accent</item>
+    <style name="AppTheme.RecyclerX" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/black</item>
 
         <item name="carbonX_colorError">#ffF44336</item>
         <item name="carbonX_debugMode">false</item>
@@ -22,23 +22,6 @@
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="ToolbarStyle" parent="@style/ThemeOverlay.AppCompat.ActionBar">
-        <item name="colorAccent">@color/primary</item>
-    </style>
-
-    <style name="ToolbarTextStyle" parent="@style/Base.TextAppearance.AppCompat.Title">
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="EditTextTheme" parent="Theme.AppCompat">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textColorHint">@color/secondaryText</item>
-        <item name="android:textSize">20sp</item>
-
-        <item name="colorControlNormal">@color/primaryText</item>
-        <item name="colorControlActivated">@color/primary</item>
     </style>
 
     <style name="carbonX_Theme.Light" parent="Theme.AppCompat.Light">

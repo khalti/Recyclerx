@@ -15,10 +15,10 @@
         android:id="@+id/nsvIndented"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical">
@@ -61,30 +61,23 @@
                 android:visibility="visible"
                 app:fontFamily="@font/roboto" />
 
-            <com.recyclerx.carbonX.widget.FrameLayout
-                android:id="@+id/flTryAgain"
+            <com.recyclerx.carbonX.widget.Button
+                android:id="@+id/btnTryAgain"
+                style="@style/carbonX_Button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/carbonX_buttonHeight"
                 android:layout_gravity="center"
+                android:layout_margin="@dimen/globalPadding"
                 android:animateLayoutChanges="true"
-                android:padding="@dimen/globalPadding"
-                android:visibility="invisible">
-
-                <com.recyclerx.carbonX.widget.Button
-                    android:id="@+id/btnTryAgain"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/carbonX_buttonHeight"
-                    android:animateLayoutChanges="true"
-                    android:minHeight="@dimen/carbonX_buttonHeight"
-                    android:minWidth="@dimen/carbonX_buttonWidth"
-                    android:text="@string/try_again"
-                    android:textAppearance="@style/carbonX_TextAppearance.Button.Dark"
-                    app:carbonX_backgroundTint="@color/primary"
-                    app:carbonX_cornerRadius="2dp"
-                    app:carbonX_elevation="2dp"
-                    app:carbonX_rippleColor="@color/defaultRipple"
-                    app:carbonX_textAllCaps="true" />
-            </com.recyclerx.carbonX.widget.FrameLayout>
+                android:minHeight="@dimen/carbonX_buttonHeight"
+                android:minWidth="@dimen/carbonX_buttonWidth"
+                android:text="@string/try_again"
+                android:textAppearance="@style/carbonX_TextAppearance.Button.Dark"
+                android:visibility="invisible"
+                app:carbonX_cornerRadius="2dp"
+                app:carbonX_elevation="2dp"
+                app:carbonX_rippleColor="@color/defaultRipple"
+                app:carbonX_textAllCaps="true" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </FrameLayout>

@@ -29,6 +29,7 @@ public class RecyclerXPresenter implements RecyclerXContract.Presenter {
         view.toggleProgressBar(show);
         view.setIndentedMessage(show ? loadingText : errorText);
         view.setIndentedImage(show ? loadingImage : errorImage);
+        view.toggleTryAgainButton(false);
     }
 
     @Override
@@ -36,6 +37,7 @@ public class RecyclerXPresenter implements RecyclerXContract.Presenter {
         view.setIndentedMessage(show ? errorText : loadingText);
         view.setIndentedImage(show ? errorImage : loadingImage);
         view.toggleProgressBar(!show);
+        view.toggleTryAgainButton(true);
     }
 
     @Override

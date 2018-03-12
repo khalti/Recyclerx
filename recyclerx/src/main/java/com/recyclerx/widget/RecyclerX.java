@@ -32,7 +32,6 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
     NestedScrollView nsvIndented;
     ProgressBar pdLoad;
     AppCompatTextView tvMessage;
-    com.recyclerx.carbonX.widget.FrameLayout flTryAgain;
     Button btnTryAgain;
     ImageView ivIndented;
 
@@ -141,7 +140,7 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
             nsvIndented = mainView.findViewById(R.id.nsvIndented);
             pdLoad = mainView.findViewById(R.id.pdLoad);
             tvMessage = mainView.findViewById(R.id.tvMessage);
-            flTryAgain = mainView.findViewById(R.id.flTryAgain);
+//            flTryAgain = mainView.findViewById(R.id.flTryAgain);
             ivIndented = mainView.findViewById(R.id.ivIndented);
             btnTryAgain = mainView.findViewById(R.id.btnTryAgain);
 
@@ -153,7 +152,7 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
             presenter.onSetErrorImage(errorImage);
             presenter.onSetLoadingImage(loadingImage);
 
-            btnTryAgain.setOnClickListener(view -> presenter.onTryAgain());
+//            btnTryAgain.setOnClickListener(view -> presenter.onTryAgain());
         }
     }
 
@@ -184,6 +183,11 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
         }
 
         @Override
+        public void toggleTryAgainButton(boolean show) {
+            btnTryAgain.setVisibility(show ? VISIBLE : INVISIBLE);
+        }
+
+        @Override
         public void setIndentedMessage(String text) {
             tvMessage.setText(text);
         }
@@ -200,7 +204,7 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
 
         @Override
         public void setTryButtonColor(int color) {
-            btnTryAgain.setBackgroundTint(color);
+            btnTryAgain.setBackgroundTint(getResources().getColorStateList(color));
         }
 
         @Override
@@ -210,7 +214,9 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
 
         @Override
         public void tryAgain() {
-            onTryAgainListener.onTryAgain();
+            if (EmptyUtil.isNotNull(onTryAgainListener)) {
+                onTryAgainListener.onTryAgain();
+            }
         }
 
         @Override

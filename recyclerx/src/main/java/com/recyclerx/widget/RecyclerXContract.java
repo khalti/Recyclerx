@@ -9,6 +9,8 @@ public interface RecyclerXContract {
 
         void toggleProgressBar(boolean show);
 
+        void toggleTryAgainButton(boolean show);
+
         void setIndentedMessage(String text);
 
         void setIndentedImage(int image);
