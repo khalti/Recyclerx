@@ -3,7 +3,6 @@ package com.recyclerximpl;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 
 import com.recyclerx.widget.RecyclerX;
 
@@ -30,10 +29,13 @@ public class MainActivity extends AppCompatActivity {
         names.add("Timro nau k ho bhana");
         names.add("Hello ko bolnu vako");
 
+        rvList.setErrorImage(R.drawable.ic_launcher_background);
+        rvList.setLoadingImage(R.mipmap.cat);
         rvList.toggleLoading(true);
         new Handler().postDelayed(() -> {
-            rvList.toggleLoading(false);
-            rvList.setupList(new NameAdapter(this, names), new LinearLayoutManager(this));
+//            rvList.toggleLoading(false);
+            rvList.toggleError(true);
+//            rvList.setupList(new NameAdapter(this, names), new LinearLayoutManager(this));
         }, 7000);
     }
 }

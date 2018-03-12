@@ -127,8 +127,8 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
         String loadingText = typedArray.getString(R.styleable.app_loadingText);
         int progressBarColor = typedArray.getInt(R.styleable.app_progressBarColor, R.color.accent);
         int tryButtonColor = typedArray.getInt(R.styleable.app_tryButtonColor, R.color.primary);
-        int loadingImage = typedArray.getInt(R.styleable.app_loadingImage, R.drawable.ic_photo);
-        int errorImage = typedArray.getInt(R.styleable.app_errorImage, R.drawable.ic_photo);
+        int loadingImage = typedArray.getResourceId(R.styleable.app_loadingImage, R.drawable.ic_photo);
+        int errorImage = typedArray.getResourceId(R.styleable.app_errorImage, R.drawable.ic_photo);
 
         typedArray.recycle();
 
@@ -150,8 +150,8 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
             presenter.onSetLoadingText(loadingText);
             presenter.onSetProgressBarColor(progressBarColor);
             presenter.onSetTryButtonColor(tryButtonColor);
-            presenter.onSetLoadingImage(loadingImage);
             presenter.onSetErrorImage(errorImage);
+            presenter.onSetLoadingImage(loadingImage);
 
             btnTryAgain.setOnClickListener(view -> presenter.onTryAgain());
         }
@@ -175,7 +175,7 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
         @Override
         public void toggleLoading(boolean show) {
             nsvIndented.setVisibility(show ? VISIBLE : GONE);
-            rvList.setVisibility(show?GONE:VISIBLE);
+            rvList.setVisibility(show ? GONE : VISIBLE);
         }
 
         @Override
