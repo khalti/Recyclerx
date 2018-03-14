@@ -51,7 +51,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     /*----Support Library----*/
-    implementation supportLibrary.recyclerView
+    api supportLibrary.recyclerView
     implementation supportLibrary.design
 
     /*Android Animations*/
