@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         fetchList(false);
         rvList.setPullToRefreshColor(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
         rvList.setOnPullToRefreshListener(() -> new Handler().postDelayed(() -> rvList.setListRefreshing(false), 3000));
+        rvList.togglePullToRefresh(false);
         rvList.setTryAgainListener(() -> fetchList(true));
     }
 

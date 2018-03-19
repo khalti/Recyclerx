@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion minSdk
         targetSdkVersion targetSdk
-        versionCode recyclerXVersionCode
-        versionName recyclerXVersionName
+        versionCode libraryVersionCode
+        versionName libraryVersionName
         renderscriptTargetApi renderScriptTarget
         renderscriptSupportModeEnabled true
 
@@ -78,4 +78,7 @@ dependencies {
     testImplementation test.hamcrest
     testImplementation test.powerMockJUnit
     testImplementation test.powerMockMockito
+
+    apply from: 'kInstall.gradle'
+    apply from: 'kBintray.gradle'
 }
