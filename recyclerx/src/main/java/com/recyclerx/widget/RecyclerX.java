@@ -5,23 +5,21 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.AppCompatTextView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
+import com.jakewharton.rxbinding.support.v4.widget.RxSwipeRefreshLayout;
 import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
-import com.jakewharton.rxbinding.view.RxView;
 import com.recyclerx.R;
-import com.recyclerx.carbonX.widget.Button;
-import com.recyclerx.carbonX.widget.ProgressBar;
 import com.recyclerx.utils.EmptyUtil;
 import com.recyclerx.widget.listeners.OnLoadMoreListener;
+import com.recyclerx.widget.listeners.OnPullToRefreshListener;
 import com.recyclerx.widget.listeners.OnTryAgainListener;
+import com.stateLayout.widget.StateLayout;
 
 import java.util.HashMap;
 
@@ -39,12 +37,9 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
     private CompositeSubscription compositeSubscription;
 
     /*Views*/
-    android.support.v7.widget.RecyclerView rvList;
-    NestedScrollView nsvIndented;
-    ProgressBar pdLoad;
-    AppCompatTextView tvMessage;
-    Button btnTryAgain;
-    ImageView ivIndented;
+    private android.support.v7.widget.RecyclerView rvList;
+    private SwipeRefreshLayout srlList;
+    private StateLayout slLoad;
 
     public RecyclerX(@NonNull Context context) {
         super(context);
@@ -79,6 +74,13 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
     public void toggleError(boolean show) {
         if (EmptyUtil.isNotNull(presenter)) {
             presenter.onErrorToggled(show);
+        }
+    }
+
+    @Override
+    public void togglePullToRefresh(boolean enable) {
+        if (EmptyUtil.isNotNull(presenter)) {
+            presenter.onPullToRefreshToggled(enable);
         }
     }
 
@@ -125,7 +127,14 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
     }
 
     @Override
-    public void setOnTryAgainListener(OnTryAgainListener onTryAgainListener) {
+    public void setPullToRefreshColor(int... color) {
+        if (EmptyUtil.isNotNull(presenter)) {
+            presenter.onSetPullToRefreshColor(color);
+        }
+    }
+
+    @Override
+    public void setTryAgainListener(OnTryAgainListener onTryAgainListener) {
         if (EmptyUtil.isNotNull(presenter)) {
             presenter.onSetTryAgainListener(onTryAgainListener);
         }
@@ -135,6 +144,13 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
     public void setOnScrollListener(int pageQuantum, OnLoadMoreListener onLoadMoreListener) {
         if (EmptyUtil.isNotNull(presenter)) {
             presenter.onSetListScrollListener(pageQuantum, onLoadMoreListener);
+        }
+    }
+
+    @Override
+    public void setOnPullToRefreshListener(OnPullToRefreshListener onPullToRefreshListener) {
+        if (EmptyUtil.isNotNull(presenter)) {
+            presenter.onSetPullToRefreshListener(onPullToRefreshListener);
         }
     }
 
@@ -164,12 +180,8 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
             mainView = inflater.inflate(R.layout.recyclerview, this, true);
 
             rvList = mainView.findViewById(R.id.rxList);
-            nsvIndented = mainView.findViewById(R.id.nsvIndented);
-            pdLoad = mainView.findViewById(R.id.pdLoad);
-            tvMessage = mainView.findViewById(R.id.tvMessage);
-//            flTryAgain = mainView.findViewById(R.id.flTryAgain);
-            ivIndented = mainView.findViewById(R.id.ivIndented);
-            btnTryAgain = mainView.findViewById(R.id.btnTryAgain);
+            slLoad = mainView.findViewById(R.id.slLoad);
+            srlList = mainView.findViewById(R.id.srlList);
 
             presenter = new RecyclerView().getPresenter();
             presenter.onSetErrorText(errorText);
@@ -198,43 +210,52 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
 
         @Override
         public void toggleIndented(boolean show) {
-            nsvIndented.setVisibility(show ? VISIBLE : GONE);
-            rvList.setVisibility(show ? GONE : VISIBLE);
+            slLoad.toggleLoading(show);
         }
 
         @Override
-        public void toggleProgressBar(boolean show) {
-            pdLoad.setVisibility(show ? VISIBLE : GONE);
+        public void toggleError(boolean show) {
+            slLoad.toggleError(show);
         }
 
         @Override
-        public void toggleTryAgainButton(boolean show) {
-            btnTryAgain.setVisibility(show ? VISIBLE : INVISIBLE);
+        public void togglePullToRefresh(boolean enable) {
+            srlList.setEnabled(enable);
         }
 
         @Override
-        public void setIndentedMessage(String text) {
-            tvMessage.setText(text);
+        public void setErrorText(String text) {
+            slLoad.setErrorText(text);
         }
 
         @Override
-        public void setIndentedImage(int image) {
-            ivIndented.setImageResource(image);
+        public void setLoadingText(String text) {
+            slLoad.setLoadingText(text);
+        }
+
+        @Override
+        public void setLoadingImage(int image) {
+            slLoad.setLoadingImage(image);
+        }
+
+        @Override
+        public void setErrorImage(int image) {
+            slLoad.setErrorImage(image);
         }
 
         @Override
         public void setProgressBarColor(int color) {
-            pdLoad.setTint(getResources().getColorStateList(color));
+            slLoad.setProgressBarColor(color);
         }
 
         @Override
         public void setTryButtonColor(int color) {
-            btnTryAgain.setBackgroundTint(getResources().getColorStateList(color));
+            slLoad.setTryButtonColor(color);
         }
 
         @Override
-        public Observable<Void> setButtonClickListener() {
-            return RxView.clicks(btnTryAgain);
+        public void setPullToRefreshColor(int... color) {
+            srlList.setColorSchemeResources(color);
         }
 
         @Override
@@ -259,6 +280,16 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
 
                     }));
             return scrollListener;
+        }
+
+        @Override
+        public void setTryAgainListener(com.stateLayout.widget.listeners.OnTryAgainListener onTryAgainListener) {
+            slLoad.setOnTryAgainListener(onTryAgainListener);
+        }
+
+        @Override
+        public Observable<Void> setPullToRefreshListener() {
+            return RxSwipeRefreshLayout.refreshes(srlList);
         }
 
         @Override

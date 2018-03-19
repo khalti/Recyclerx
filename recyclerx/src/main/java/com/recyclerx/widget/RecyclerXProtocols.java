@@ -3,6 +3,7 @@ package com.recyclerx.widget;
 import android.support.v7.widget.RecyclerView;
 
 import com.recyclerx.widget.listeners.OnLoadMoreListener;
+import com.recyclerx.widget.listeners.OnPullToRefreshListener;
 import com.recyclerx.widget.listeners.OnTryAgainListener;
 
 public interface RecyclerXProtocols {
@@ -12,6 +13,8 @@ public interface RecyclerXProtocols {
     void toggleLoading(boolean show);
 
     void toggleError(boolean show);
+
+    void togglePullToRefresh(boolean enable);
 
     void setLoadingText(String text);
 
@@ -25,9 +28,13 @@ public interface RecyclerXProtocols {
 
     void setTryButtonColor(int color);
 
-    void setOnTryAgainListener(OnTryAgainListener onTryAgainListener);
+    void setPullToRefreshColor(int... color);
+
+    void setTryAgainListener(OnTryAgainListener onTryAgainListener);
 
     void setOnScrollListener(int pageQuantum, OnLoadMoreListener onLoadMoreListener);
+
+    void setOnPullToRefreshListener(OnPullToRefreshListener onPullToRefreshListener);
 
     void onDestroy();
 }

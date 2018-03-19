@@ -1,83 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<com.stateLayout.widget.StateLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/slLoad"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rxList"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srlList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:layout_height="match_parent">
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/nsvIndented"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible">
-
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rxList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/ivIndented"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/globalPadding"
-                android:adjustViewBounds="true"
-                android:animateLayoutChanges="true"
-                android:contentDescription="@null"
-                app:srcCompat="@drawable/ic_photo" />
-
-            <com.recyclerx.carbonX.widget.ProgressBar
-                android:id="@+id/pdLoad"
-                android:layout_width="150dp"
-                android:layout_height="4dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/globalPadding"
-                android:layout_marginLeft="@dimen/globalPadding"
-                android:layout_marginRight="@dimen/globalPadding"
-                android:animateLayoutChanges="true"
-                android:background="@color/disabled"
-                app:carbonX_progressStyle="bar_indeterminate"
-                app:carbonX_tint="@color/accent" />
-
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/tvMessage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="32dp"
-                android:layout_marginRight="32dp"
-                android:animateLayoutChanges="true"
-                android:text="@string/empty"
-                android:textColor="@color/primaryText"
-                android:textSize="@dimen/head"
-                android:visibility="visible"
-                app:fontFamily="@font/roboto" />
-
-            <com.recyclerx.carbonX.widget.Button
-                android:id="@+id/btnTryAgain"
-                style="@style/carbonX_Button"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/carbonX_buttonHeight"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/globalPadding"
-                android:animateLayoutChanges="true"
-                android:minHeight="@dimen/carbonX_buttonHeight"
-                android:minWidth="@dimen/carbonX_buttonWidth"
-                android:text="@string/try_again"
-                android:textAppearance="@style/carbonX_TextAppearance.Button.Dark"
-                android:visibility="invisible"
-                app:carbonX_cornerRadius="2dp"
-                app:carbonX_elevation="2dp"
-                app:carbonX_rippleColor="@color/defaultRipple"
-                app:carbonX_textAllCaps="true" />
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-</FrameLayout>
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+</com.stateLayout.widget.StateLayout>

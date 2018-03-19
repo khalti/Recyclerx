@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         fetchList(false);
-        rvList.setOnTryAgainListener(() -> fetchList(true));
+        rvList.setTryAgainListener(() -> fetchList(true));
     }
 
     private void fetchList(boolean success) {
@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
         names.add("4");
 
         adapter = new NameAdapter(this, names);
-        rvList.setErrorImage(R.drawable.ic_launcher_background);
-        rvList.setLoadingImage(R.mipmap.cat);
+        rvList.setErrorImage(R.mipmap.cat);
+        rvList.setLoadingImage(R.drawable.ic_launcher_background);
         rvList.toggleLoading(true);
         new Handler().postDelayed(() -> {
             rvList.toggleLoading(false);

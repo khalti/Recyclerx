@@ -1,6 +1,7 @@
 package com.recyclerx.widget;
 
 import com.recyclerx.widget.listeners.OnLoadMoreListener;
+import com.recyclerx.widget.listeners.OnPullToRefreshListener;
 import com.recyclerx.widget.listeners.OnTryAgainListener;
 
 import java.util.HashMap;
@@ -14,21 +15,29 @@ public interface RecyclerXContract {
 
         void toggleIndented(boolean show);
 
-        void toggleProgressBar(boolean show);
+        void toggleError(boolean show);
 
-        void toggleTryAgainButton(boolean show);
+        void togglePullToRefresh(boolean enable);
 
-        void setIndentedMessage(String text);
+        void setErrorText(String text);
 
-        void setIndentedImage(int image);
+        void setLoadingText(String text);
+
+        void setLoadingImage(int image);
+
+        void setErrorImage(int image);
 
         void setProgressBarColor(int color);
 
         void setTryButtonColor(int color);
 
-        Observable<Void> setButtonClickListener();
+        void setPullToRefreshColor(int... color);
 
         Observable<HashMap<String, Integer>> addListScrollListener();
+
+        void setTryAgainListener(com.stateLayout.widget.listeners.OnTryAgainListener onTryAgainListener);
+
+        Observable<Void> setPullToRefreshListener();
 
         Presenter getPresenter();
 
@@ -43,6 +52,8 @@ public interface RecyclerXContract {
 
         void onErrorToggled(boolean show);
 
+        void onPullToRefreshToggled(boolean enable);
+
         void onSetErrorText(String text);
 
         void onSetLoadingText(String text);
@@ -55,9 +66,13 @@ public interface RecyclerXContract {
 
         void onSetTryButtonColor(int color);
 
+        void onSetPullToRefreshColor(int... color);
+
         void onSetTryAgainListener(OnTryAgainListener onTryAgainListener);
 
         void onSetListScrollListener(int pageQuantum, OnLoadMoreListener onLoadMoreListener);
+
+        void onSetPullToRefreshListener(OnPullToRefreshListener onPullToRefreshListener);
 
         void onDestroy();
     }

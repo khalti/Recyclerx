@@ -57,6 +57,9 @@ dependencies {
     /*Android Animations*/
     implementation ui.nineoldanimations
 
+    /*State Layout*/
+    implementation ui.stateLayout
+
     /*ReactiveX*/
     implementation rx.rxjava
     implementation rx.rxandroid
@@ -64,6 +67,7 @@ dependencies {
     /*RxBinding*/
     implementation rx.rxBinding
     implementation rx.rxRecyclerBinding
+    implementation rx.rxSupport
 
     retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.5.3'
     /*---------------------------------------------------------------------------------------------------------------------*/

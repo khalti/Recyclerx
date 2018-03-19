@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.recyclerx.utils.EmptyUtil;
 import com.recyclerx.utils.GuavaUtil;
 import com.recyclerx.widget.listeners.OnLoadMoreListener;
+import com.recyclerx.widget.listeners.OnPullToRefreshListener;
 import com.recyclerx.widget.listeners.OnTryAgainListener;
 
 import rx.subscriptions.CompositeSubscription;
@@ -14,9 +15,6 @@ public class RecyclerXPresenter implements RecyclerXContract.Presenter {
     @NonNull
     private final RecyclerXContract.View view;
     private CompositeSubscription compositeSubscription;
-
-    private String loadingText = "Loading... Please wait", errorText = "Something went wrong";
-    private int loadingImage, errorImage;
 
     RecyclerXPresenter(@NonNull RecyclerXContract.View view) {
         this.view = GuavaUtil.checkNotNull(view);
@@ -32,43 +30,36 @@ public class RecyclerXPresenter implements RecyclerXContract.Presenter {
     @Override
     public void onLoadingToggled(boolean show) {
         view.toggleIndented(show);
-        view.toggleProgressBar(show);
-        view.setIndentedMessage(show ? loadingText : errorText);
-        view.setIndentedImage(show ? loadingImage : errorImage);
-        view.toggleTryAgainButton(false);
     }
 
     @Override
     public void onErrorToggled(boolean show) {
-        view.toggleIndented(show);
-        view.setIndentedMessage(show ? errorText : loadingText);
-        view.setIndentedImage(show ? errorImage : loadingImage);
-        view.toggleProgressBar(!show);
-        view.toggleTryAgainButton(true);
+        view.toggleError(show);
+    }
+
+    @Override
+    public void onPullToRefreshToggled(boolean enable) {
+        view.togglePullToRefresh(enable);
     }
 
     @Override
     public void onSetErrorText(String text) {
-        if (EmptyUtil.isNotNull(text) && EmptyUtil.isNotEmpty(text)) {
-            errorText = text;
-        }
+        view.setErrorText(text);
     }
 
     @Override
     public void onSetLoadingText(String text) {
-        if (EmptyUtil.isNotNull(text) && EmptyUtil.isNotEmpty(text)) {
-            loadingText = text;
-        }
+        view.setLoadingText(text);
     }
 
     @Override
     public void onSetLoadingImage(int image) {
-        loadingImage = image;
+        view.setLoadingImage(image);
     }
 
     @Override
     public void onSetErrorImage(int image) {
-        errorImage = image;
+        view.setErrorImage(image);
     }
 
     @Override
@@ -82,8 +73,13 @@ public class RecyclerXPresenter implements RecyclerXContract.Presenter {
     }
 
     @Override
+    public void onSetPullToRefreshColor(int... color) {
+        view.setPullToRefreshColor(color);
+    }
+
+    @Override
     public void onSetTryAgainListener(OnTryAgainListener onTryAgainListener) {
-        compositeSubscription.add(view.setButtonClickListener().subscribe(aVoid -> onTryAgainListener.onTryAgain()));
+        view.setTryAgainListener(onTryAgainListener::onTryAgain);
     }
 
     @Override
@@ -97,6 +93,11 @@ public class RecyclerXPresenter implements RecyclerXContract.Presenter {
                 onLoadMoreListener.onLoadMore();
             }
         }));
+    }
+
+    @Override
+    public void onSetPullToRefreshListener(OnPullToRefreshListener onPullToRefreshListener) {
+        compositeSubscription.add(view.setPullToRefreshListener().subscribe(aVoid -> onPullToRefreshListener.onRefresh()));
     }
 
     @Override
