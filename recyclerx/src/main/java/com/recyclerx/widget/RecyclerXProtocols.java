@@ -16,6 +16,10 @@ public interface RecyclerXProtocols {
 
     void togglePullToRefresh(boolean enable);
 
+    boolean isListRefreshing();
+
+    void setListRefreshing(boolean refreshing);
+
     void setLoadingText(String text);
 
     void setErrorText(String text);

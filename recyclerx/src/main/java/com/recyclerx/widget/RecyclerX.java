@@ -85,6 +85,21 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
     }
 
     @Override
+    public boolean isListRefreshing() {
+        if (EmptyUtil.isNotNull(presenter)) {
+            return presenter.onGetRefreshingStatus();
+        }
+        return false;
+    }
+
+    @Override
+    public void setListRefreshing(boolean refreshing) {
+        if (EmptyUtil.isNotNull(presenter)) {
+            presenter.onSetListRefreshing(refreshing);
+        }
+    }
+
+    @Override
     public void setLoadingText(String text) {
         if (EmptyUtil.isNotNull(presenter)) {
             presenter.onSetLoadingText(text);
@@ -256,6 +271,16 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
         @Override
         public void setPullToRefreshColor(int... color) {
             srlList.setColorSchemeResources(color);
+        }
+
+        @Override
+        public boolean isListRefreshing() {
+            return srlList.isRefreshing();
+        }
+
+        @Override
+        public void setListRefreshing(boolean refreshing) {
+            srlList.setRefreshing(refreshing);
         }
 
         @Override

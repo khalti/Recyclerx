@@ -78,6 +78,16 @@ public class RecyclerXPresenter implements RecyclerXContract.Presenter {
     }
 
     @Override
+    public boolean onGetRefreshingStatus() {
+        return view.isListRefreshing();
+    }
+
+    @Override
+    public void onSetListRefreshing(boolean refreshing) {
+        view.setListRefreshing(refreshing);
+    }
+
+    @Override
     public void onSetTryAgainListener(OnTryAgainListener onTryAgainListener) {
         view.setTryAgainListener(onTryAgainListener::onTryAgain);
     }

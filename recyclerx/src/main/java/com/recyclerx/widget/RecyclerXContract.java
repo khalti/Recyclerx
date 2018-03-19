@@ -33,6 +33,10 @@ public interface RecyclerXContract {
 
         void setPullToRefreshColor(int... color);
 
+        boolean isListRefreshing();
+
+        void setListRefreshing(boolean refreshing);
+
         Observable<HashMap<String, Integer>> addListScrollListener();
 
         void setTryAgainListener(com.stateLayout.widget.listeners.OnTryAgainListener onTryAgainListener);
@@ -67,6 +71,10 @@ public interface RecyclerXContract {
         void onSetTryButtonColor(int color);
 
         void onSetPullToRefreshColor(int... color);
+
+        boolean onGetRefreshingStatus();
+
+        void onSetListRefreshing(boolean refreshing);
 
         void onSetTryAgainListener(OnTryAgainListener onTryAgainListener);
 
