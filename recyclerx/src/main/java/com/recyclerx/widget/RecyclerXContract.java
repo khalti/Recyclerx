@@ -6,7 +6,7 @@ import com.recyclerx.widget.listeners.OnTryAgainListener;
 
 import java.util.HashMap;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 public interface RecyclerXContract {
     interface View {
@@ -41,7 +41,7 @@ public interface RecyclerXContract {
 
         void setTryAgainListener(com.stateLayout.widget.listeners.OnTryAgainListener onTryAgainListener);
 
-        Observable<Void> setPullToRefreshListener();
+        Observable<Object> setPullToRefreshListener();
 
         Presenter getPresenter();
 

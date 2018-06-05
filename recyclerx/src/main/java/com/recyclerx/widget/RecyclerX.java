@@ -12,8 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.jakewharton.rxbinding.support.v4.widget.RxSwipeRefreshLayout;
-import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
+import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout;
+import com.jakewharton.rxbinding2.support.v7.widget.RxRecyclerView;
 import com.recyclerx.R;
 import com.recyclerx.utils.EmptyUtil;
 import com.recyclerx.widget.listeners.OnLoadMoreListener;
@@ -23,9 +23,9 @@ import com.stateLayout.widget.StateLayout;
 
 import java.util.HashMap;
 
-import rx.Observable;
-import rx.subjects.PublishSubject;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.subjects.PublishSubject;
 
 public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
 
@@ -34,7 +34,7 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
     private RecyclerXContract.Presenter presenter;
     private android.support.v7.widget.RecyclerView.Adapter adapter;
     private android.support.v7.widget.RecyclerView.LayoutManager layoutManager;
-    private CompositeSubscription compositeSubscription;
+    private CompositeDisposable compositeDisposable;
 
     /*Views*/
     private android.support.v7.widget.RecyclerView rvList;
@@ -177,7 +177,7 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
     }
 
     private void init() {
-        compositeSubscription = new CompositeSubscription();
+        compositeDisposable = new CompositeDisposable();
         @SuppressLint("CustomViewStyleable")
         TypedArray typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.app, 0, 0);
         String errorText = typedArray.getString(R.styleable.app_errorText);
@@ -287,7 +287,7 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
         public Observable<HashMap<String, Integer>> addListScrollListener() {
             PublishSubject<HashMap<String, Integer>> scrollListener = PublishSubject.create();
 
-            compositeSubscription.add(RxRecyclerView.scrollEvents(rvList)
+            compositeDisposable.add(RxRecyclerView.scrollEvents(rvList)
                     .subscribe(recyclerViewScrollEvent -> {
                         if (recyclerViewScrollEvent.dy() > 0) {
                             int fp = 0;
@@ -313,7 +313,7 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
         }
 
         @Override
-        public Observable<Void> setPullToRefreshListener() {
+        public Observable<Object> setPullToRefreshListener() {
             return RxSwipeRefreshLayout.refreshes(srlList);
         }
 
