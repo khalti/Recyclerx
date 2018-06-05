@@ -70,7 +70,7 @@ dependencies {
     testImplementation test.hamcrest
     testImplementation test.powerMockJUnit
     testImplementation test.powerMockMockito
-
-    apply from: 'kInstall.gradle'
-    apply from: 'kBintray.gradle'
 }
+
+apply from: 'kInstall.gradle'
+apply from: 'kBintray.gradle'
