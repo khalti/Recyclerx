@@ -17,16 +17,17 @@ ext {
             stateLayout      : "com.khalti:statelayout:${stateLayoutVersion}"
     ]
 
-    rxVersion = '1.1.0'
-    rxAndroidVersion = '1.2.1'
-    rxBinding = '1.0.1'
+    rxVersion = '2.1.14'
+    rxAndroidVersion = '2.0.2'
+    rxBindingVersion = '2.1.1'
 
     rx = [
-            rxjava           : "io.reactivex:rxjava:${rxVersion}",
-            rxandroid        : "io.reactivex:rxandroid:${rxAndroidVersion}",
-            rxBinding        : "com.jakewharton.rxbinding:rxbinding:${rxBinding}",
-            rxRecyclerBinding: "com.jakewharton.rxbinding:rxbinding-recyclerview-v7:${rxBinding}",
-            rxSupport        : "com.jakewharton.rxbinding:rxbinding-support-v4:${rxBinding}"
+            rxjava           : "io.reactivex.rxjava2:rxjava:${rxVersion}",
+            rxandroid        : "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
+
+            rxBinding            : "com.jakewharton.rxbinding2:rxbinding:$rxBindingVersion",
+            rxBindingSupport     : "com.jakewharton.rxbinding2:rxbinding-support-v4:$rxBindingVersion",
+            rxBindingRecyclerView: "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:$rxBindingVersion"
     ]
 
     junitVersion = '4.12'

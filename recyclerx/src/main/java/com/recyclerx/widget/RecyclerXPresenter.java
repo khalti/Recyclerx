@@ -8,18 +8,18 @@ import com.recyclerx.widget.listeners.OnLoadMoreListener;
 import com.recyclerx.widget.listeners.OnPullToRefreshListener;
 import com.recyclerx.widget.listeners.OnTryAgainListener;
 
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class RecyclerXPresenter implements RecyclerXContract.Presenter {
 
     @NonNull
     private final RecyclerXContract.View view;
-    private CompositeSubscription compositeSubscription;
+    private CompositeDisposable compositeDisposable;
 
     RecyclerXPresenter(@NonNull RecyclerXContract.View view) {
         this.view = GuavaUtil.checkNotNull(view);
         view.setPresenter(this);
-        compositeSubscription = new CompositeSubscription();
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -94,7 +94,7 @@ public class RecyclerXPresenter implements RecyclerXContract.Presenter {
 
     @Override
     public void onSetListScrollListener(int pageQuantum, OnLoadMoreListener onLoadMoreListener) {
-        compositeSubscription.add(view.addListScrollListener().subscribe(map -> {
+        compositeDisposable.add(view.addListScrollListener().subscribe(map -> {
             int pastVisibleItems = map.get("past_visible_items");
             int visibleItemCount = map.get("visible_item_count");
             int totalItemCount = map.get("total_item_count");
@@ -107,13 +107,13 @@ public class RecyclerXPresenter implements RecyclerXContract.Presenter {
 
     @Override
     public void onSetPullToRefreshListener(OnPullToRefreshListener onPullToRefreshListener) {
-        compositeSubscription.add(view.setPullToRefreshListener().subscribe(aVoid -> onPullToRefreshListener.onRefresh()));
+        compositeDisposable.add(view.setPullToRefreshListener().subscribe(aVoid -> onPullToRefreshListener.onRefresh()));
     }
 
     @Override
     public void onDestroy() {
-        if (EmptyUtil.isNotNull(compositeSubscription) && compositeSubscription.hasSubscriptions() && !compositeSubscription.isUnsubscribed()) {
-            compositeSubscription.unsubscribe();
+        if (EmptyUtil.isNotNull(compositeDisposable) && !compositeDisposable.isDisposed()) {
+            compositeDisposable.dispose();
         }
     }
 }
