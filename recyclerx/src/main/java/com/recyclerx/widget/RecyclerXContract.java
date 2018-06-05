@@ -27,6 +27,10 @@ public interface RecyclerXContract {
 
         void setErrorImage(int image);
 
+        void setCustomLoadingView();
+
+        void setCustomErrorView();
+
         void setProgressBarColor(int color);
 
         void setTryButtonColor(int color);
@@ -65,6 +69,10 @@ public interface RecyclerXContract {
         void onSetLoadingImage(int image);
 
         void onSetErrorImage(int image);
+
+        void onSetCustomLoadingView();
+
+        void onSetCustomErrorView();
 
         void onSetProgressBarColor(int color);
 
