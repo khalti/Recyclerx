@@ -6,7 +6,7 @@ import com.recyclerx.widget.listeners.OnTryAgainListener;
 
 import java.util.HashMap;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 public interface RecyclerXContract {
     interface View {
@@ -27,6 +27,10 @@ public interface RecyclerXContract {
 
         void setErrorImage(int image);
 
+        void setCustomLoadingView();
+
+        void setCustomErrorView();
+
         void setProgressBarColor(int color);
 
         void setTryButtonColor(int color);
@@ -41,7 +45,7 @@ public interface RecyclerXContract {
 
         void setTryAgainListener(com.stateLayout.widget.listeners.OnTryAgainListener onTryAgainListener);
 
-        Observable<Void> setPullToRefreshListener();
+        Observable<Object> setPullToRefreshListener();
 
         Presenter getPresenter();
 
@@ -65,6 +69,10 @@ public interface RecyclerXContract {
         void onSetLoadingImage(int image);
 
         void onSetErrorImage(int image);
+
+        void onSetCustomLoadingView();
+
+        void onSetCustomErrorView();
 
         void onSetProgressBarColor(int color);
 

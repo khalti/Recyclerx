@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.recyclerx.widget.RecyclerX;
 
@@ -53,8 +55,15 @@ public class MainActivity extends AppCompatActivity {
         names.add("4");
 
         adapter = new NameAdapter(this, names);
-        rvList.setErrorImage(R.mipmap.cat);
-        rvList.setLoadingImage(R.drawable.ic_launcher_background);
+
+        View loadView = getLayoutInflater().inflate(R.layout.custom_view, null);
+        ((ImageView) loadView.findViewById(R.id.iv)).setImageResource(R.mipmap.cat);
+        rvList.setCustomLoadingView(loadView);
+
+        View errorView = getLayoutInflater().inflate(R.layout.custom_view, null);
+        ((ImageView) errorView.findViewById(R.id.iv)).setImageResource(R.drawable.ic_launcher_background);
+        rvList.setCustomErrorView(errorView);
+
         rvList.toggleLoading(true);
         new Handler().postDelayed(() -> {
             rvList.toggleLoading(false);
