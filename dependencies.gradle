@@ -1,6 +1,6 @@
 ext {
 
-    supportVersion = '27.0.2'
+    supportVersion = '27.1.1'
 
     supportLibrary = [
             appCompat   : "com.android.support:appcompat-v7:${supportVersion}",
@@ -10,7 +10,7 @@ ext {
 
     nineDroidVersion = '2.4.0'
     butterKnifeVersion = '8.8.0'
-    stateLayoutVersion = "1.0.1"
+    stateLayoutVersion = "1.1.0"
 
     ui = [
             nineoldanimations: "com.nineoldandroids:library:${nineDroidVersion}",
@@ -19,15 +19,14 @@ ext {
 
     rxVersion = '2.1.14'
     rxAndroidVersion = '2.0.2'
-    rxBindingVersion = '2.1.1'
+    rxBinding = '2.1.1'
 
     rx = [
             rxjava           : "io.reactivex.rxjava2:rxjava:${rxVersion}",
             rxandroid        : "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
-
-            rxBinding            : "com.jakewharton.rxbinding2:rxbinding:$rxBindingVersion",
-            rxBindingSupport     : "com.jakewharton.rxbinding2:rxbinding-support-v4:$rxBindingVersion",
-            rxBindingRecyclerView: "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:$rxBindingVersion"
+            rxBinding        : "com.jakewharton.rxbinding2:rxbinding:${rxBinding}",
+            rxRecyclerBinding: "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:${rxBinding}",
+            rxSupport        : "com.jakewharton.rxbinding2:rxbinding-support-v4:${rxBinding}"
     ]
 
     junitVersion = '4.12'

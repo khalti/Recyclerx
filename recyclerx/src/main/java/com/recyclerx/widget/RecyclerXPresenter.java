@@ -63,6 +63,16 @@ public class RecyclerXPresenter implements RecyclerXContract.Presenter {
     }
 
     @Override
+    public void onSetCustomLoadingView() {
+        view.setCustomLoadingView();
+    }
+
+    @Override
+    public void onSetCustomErrorView() {
+        view.setCustomErrorView();
+    }
+
+    @Override
     public void onSetProgressBarColor(int color) {
         view.setProgressBarColor(color);
     }

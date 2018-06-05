@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion targetSdk
@@ -40,11 +39,6 @@ android {
         options.addStringOption('encoding', 'UTF-8')
         options.addStringOption('charSet', 'UTF-8')
     }
-
-    retrolambda {
-        defaultMethods false
-        include 'Debug'
-    }
 }
 
 dependencies {
@@ -66,10 +60,8 @@ dependencies {
 
     /*RxBinding*/
     implementation rx.rxBinding
-    implementation rx.rxBindingRecyclerView
-    implementation rx.rxBindingSupport
-
-    retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.5.3'
+    implementation rx.rxRecyclerBinding
+    implementation rx.rxSupport
     /*---------------------------------------------------------------------------------------------------------------------*/
 
     /*Unit Testing*/
@@ -78,7 +70,7 @@ dependencies {
     testImplementation test.hamcrest
     testImplementation test.powerMockJUnit
     testImplementation test.powerMockMockito
-
-    apply from: 'kInstall.gradle'
-    apply from: 'kBintray.gradle'
 }
+
+apply from: 'kInstall.gradle'
+apply from: 'kBintray.gradle'

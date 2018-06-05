@@ -1,6 +1,7 @@
 package com.recyclerx.widget;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.recyclerx.widget.listeners.OnLoadMoreListener;
 import com.recyclerx.widget.listeners.OnPullToRefreshListener;
@@ -27,6 +28,10 @@ public interface RecyclerXProtocols {
     void setLoadingImage(int image);
 
     void setErrorImage(int image);
+
+    void setCustomLoadingView(View view);
+
+    void setCustomErrorView(View view);
 
     void setProgressBarColor(int color);
 
