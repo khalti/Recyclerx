@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.jakewharton.rxbinding.support.v4.widget.RxSwipeRefreshLayout;
+import com.jakewharton.rxbinding.support.v7.widget.RecyclerViewScrollEvent;
 import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
 import com.recyclerx.R;
 import com.recyclerx.utils.EmptyUtil;
@@ -24,6 +25,7 @@ import com.stateLayout.widget.StateLayout;
 import java.util.HashMap;
 
 import rx.Observable;
+import rx.functions.Action1;
 import rx.subjects.PublishSubject;
 import rx.subscriptions.CompositeSubscription;
 
@@ -288,21 +290,24 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
             PublishSubject<HashMap<String, Integer>> scrollListener = PublishSubject.create();
 
             compositeSubscription.add(RxRecyclerView.scrollEvents(rvList)
-                    .subscribe(recyclerViewScrollEvent -> {
-                        if (recyclerViewScrollEvent.dy() > 0) {
-                            int fp = 0;
-                            if (layoutManager instanceof LinearLayoutManager) {
-                                fp = ((LinearLayoutManager) layoutManager).findFirstVisibleItemPosition();
+                    .subscribe(new Action1<RecyclerViewScrollEvent>() {
+                        @Override
+                        public void call(RecyclerViewScrollEvent recyclerViewScrollEvent) {
+                            if (recyclerViewScrollEvent.dy() > 0) {
+                                int fp = 0;
+                                if (layoutManager instanceof LinearLayoutManager) {
+                                    fp = ((LinearLayoutManager) layoutManager).findFirstVisibleItemPosition();
+                                }
+                                int finalFp = fp;
+                                scrollListener.onNext(new HashMap<String, Integer>() {{
+                                    put("dy", recyclerViewScrollEvent.dy());
+                                    put("past_visible_items", finalFp);
+                                    put("visible_item_count", layoutManager.getChildCount());
+                                    put("total_item_count", layoutManager.getItemCount());
+                                }});
                             }
-                            int finalFp = fp;
-                            scrollListener.onNext(new HashMap<String, Integer>() {{
-                                put("dy", recyclerViewScrollEvent.dy());
-                                put("past_visible_items", finalFp);
-                                put("visible_item_count", layoutManager.getChildCount());
-                                put("total_item_count", layoutManager.getItemCount());
-                            }});
-                        }
 
+                        }
                     }));
             return scrollListener;
         }

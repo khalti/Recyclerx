@@ -19,3 +19,22 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+
+-keep class android.support.v8.renderscript.** { *; }
+
+#Animations
+-keep class com.nineoldandroids.animation.** { *; }
+-keep interface com.nineoldandroids.animation.** { *; }
+-keep class com.nineoldandroids.view.** { *; }
+-keep interface com.nineoldandroids.view.** { *; }
+
+#Retrolambda
+-dontwarn java.lang.invoke.*
+-dontwarn **$$Lambda$*
+
+#utils
+-keep class com.recyclerx.utils.** { *; }
+
+#statelayout widget
+-keep class com.recyclerx.widget.** { *; }
