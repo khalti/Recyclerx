@@ -4,7 +4,7 @@ import android.util.Log;
 
 public class LogUtil {
     // Do logs need to be visible ?
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     public static void log(String tag, Object message) {
         if (DEBUG) {

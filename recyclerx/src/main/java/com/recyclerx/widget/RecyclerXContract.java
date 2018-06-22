@@ -45,6 +45,8 @@ public interface RecyclerXContract {
 
         void setTryAgainListener(com.stateLayout.widget.listeners.OnTryAgainListener onTryAgainListener);
 
+        Observable<Object> setTryAgainListener();
+
         Observable<Object> setPullToRefreshListener();
 
         Presenter getPresenter();
@@ -89,6 +91,12 @@ public interface RecyclerXContract {
         void onSetListScrollListener(int pageQuantum, OnLoadMoreListener onLoadMoreListener);
 
         void onSetPullToRefreshListener(OnPullToRefreshListener onPullToRefreshListener);
+
+        Observable<Object> onSetTryAgainListener();
+
+        Observable<Object> onSetListScrollListener(int pageQuantum);
+
+        Observable<Object> onSetPullToRefreshListener();
 
         void onDestroy();
     }

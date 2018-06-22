@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.recyclerx.utils.EmptyUtil;
 import com.recyclerx.widget.RecyclerX;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerX rvList;
 
     private NameAdapter adapter;
+    private CompositeDisposable compositeDisposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +32,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        compositeDisposable = new CompositeDisposable();
+
         fetchList(false);
         rvList.setPullToRefreshColor(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
-        rvList.setOnPullToRefreshListener(() -> new Handler().postDelayed(() -> rvList.setListRefreshing(false), 3000));
-        rvList.setTryAgainListener(() -> fetchList(true));
+
+//        rvList.setOnPullToRefreshListener(() -> new Handler().postDelayed(() -> rvList.setListRefreshing(false), 3000));
+//        rvList.setTryAgainListener(() -> fetchList(true));
+
+        Observable<Object> pullToRefresh = rvList.setOnPullToRefreshListener();
+        Observable<Object> tryAgain = rvList.setTryAgainListener();
+
+        if (EmptyUtil.isNotNull(pullToRefresh)) {
+            compositeDisposable.add(pullToRefresh.subscribe(o -> new Handler().postDelayed(() -> rvList.setListRefreshing(false), 3000)));
+        }
+        if (EmptyUtil.isNotNull(tryAgain)) {
+            compositeDisposable.add(tryAgain.subscribe(o -> fetchList(true)));
+        }
     }
 
     private void fetchList(boolean success) {
@@ -68,7 +85,12 @@ public class MainActivity extends AppCompatActivity {
             rvList.toggleLoading(false);
             if (success) {
                 rvList.setupList(adapter, new LinearLayoutManager(this));
-                rvList.setOnScrollListener(10, this::fetchMore);
+
+                Observable<Object> scroll = rvList.setOnScrollListener(10);
+                if (EmptyUtil.isNotNull(scroll)) {
+                    compositeDisposable.add(scroll.subscribe(o -> fetchMore()));
+                }
+//                rvList.setOnScrollListener(10, this::fetchMore);
             } else {
                 rvList.toggleError(true);
             }
