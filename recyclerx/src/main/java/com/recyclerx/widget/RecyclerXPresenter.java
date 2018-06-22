@@ -8,7 +8,9 @@ import com.recyclerx.widget.listeners.OnLoadMoreListener;
 import com.recyclerx.widget.listeners.OnPullToRefreshListener;
 import com.recyclerx.widget.listeners.OnTryAgainListener;
 
+import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.subjects.PublishSubject;
 
 public class RecyclerXPresenter implements RecyclerXContract.Presenter {
 
@@ -118,6 +120,32 @@ public class RecyclerXPresenter implements RecyclerXContract.Presenter {
     @Override
     public void onSetPullToRefreshListener(OnPullToRefreshListener onPullToRefreshListener) {
         compositeDisposable.add(view.setPullToRefreshListener().subscribe(aVoid -> onPullToRefreshListener.onRefresh()));
+    }
+
+    @Override
+    public Observable<Object> onSetTryAgainListener() {
+        return view.setTryAgainListener();
+    }
+
+    @Override
+    public Observable<Object> onSetListScrollListener(int pageQuantum) {
+        PublishSubject<Object> listScrollPublish = PublishSubject.create();
+        compositeDisposable.add(view.addListScrollListener().subscribe(map -> {
+            int pastVisibleItems = map.get("past_visible_items");
+            int visibleItemCount = map.get("visible_item_count");
+            int totalItemCount = map.get("total_item_count");
+
+            if (totalItemCount > pageQuantum && (visibleItemCount + pastVisibleItems) >= totalItemCount) {
+                listScrollPublish.onNext("");
+            }
+        }));
+
+        return listScrollPublish;
+    }
+
+    @Override
+    public Observable<Object> onSetPullToRefreshListener() {
+        return view.setPullToRefreshListener();
     }
 
     @Override

@@ -7,6 +7,8 @@ import com.recyclerx.widget.listeners.OnLoadMoreListener;
 import com.recyclerx.widget.listeners.OnPullToRefreshListener;
 import com.recyclerx.widget.listeners.OnTryAgainListener;
 
+import io.reactivex.Observable;
+
 public interface RecyclerXProtocols {
 
     void setupList(RecyclerView.Adapter adapter, RecyclerView.LayoutManager layoutManager);
@@ -44,6 +46,12 @@ public interface RecyclerXProtocols {
     void setOnScrollListener(int pageQuantum, OnLoadMoreListener onLoadMoreListener);
 
     void setOnPullToRefreshListener(OnPullToRefreshListener onPullToRefreshListener);
+
+    Observable<Object> setTryAgainListener();
+
+    Observable<Object> setOnScrollListener(int pageQuantum);
+
+    Observable<Object> setOnPullToRefreshListener();
 
     void onDestroy();
 }

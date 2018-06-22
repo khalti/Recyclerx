@@ -184,6 +184,33 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
     }
 
     @Override
+    @Nullable
+    public Observable<Object> setTryAgainListener() {
+        if (EmptyUtil.isNotNull(presenter)) {
+            return presenter.onSetTryAgainListener();
+        }
+        return null;
+    }
+
+    @Override
+    @Nullable
+    public Observable<Object> setOnScrollListener(int pageQuantum) {
+        if (EmptyUtil.isNotNull(presenter)) {
+            return presenter.onSetListScrollListener(pageQuantum);
+        }
+        return null;
+    }
+
+    @Override
+    @Nullable
+    public Observable<Object> setOnPullToRefreshListener() {
+        if (EmptyUtil.isNotNull(presenter)) {
+            return presenter.onSetPullToRefreshListener();
+        }
+        return null;
+    }
+
+    @Override
     public void onDestroy() {
         if (EmptyUtil.isNotNull(presenter)) {
             presenter.onDestroy();
@@ -333,6 +360,11 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
         @Override
         public void setTryAgainListener(com.stateLayout.widget.listeners.OnTryAgainListener onTryAgainListener) {
             slLoad.setOnTryAgainListener(onTryAgainListener);
+        }
+
+        @Override
+        public Observable<Object> setTryAgainListener() {
+            return slLoad.setOnTryAgainListener();
         }
 
         @Override

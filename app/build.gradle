@@ -36,6 +36,10 @@ dependencies {
     implementation supportLibrary.appCompat
     /*ButterKnife*/
     implementation "com.jakewharton:butterknife:${butterKnifeVersion}"
+    implementation rx.rxjava
+    implementation rx.rxandroid
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterKnifeVersion}"
     implementation project(':recyclerx')
+
+//    implementation "com.khalti:recyclerx:1.1.0"
 }

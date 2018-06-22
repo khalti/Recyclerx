@@ -10,7 +10,7 @@ ext {
 
     nineDroidVersion = '2.4.0'
     butterKnifeVersion = '8.8.0'
-    stateLayoutVersion = "1.1.0"
+    stateLayoutVersion = "1.2.0"
 
     ui = [
             nineoldanimations: "com.nineoldandroids:library:${nineDroidVersion}",
