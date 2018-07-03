@@ -4,24 +4,21 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-
-import com.recyclerx.utils.EmptyUtil;
-import com.recyclerx.widget.RecyclerX;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.rvList)
-    RecyclerX rvList;
+    RecyclerView rvList;
 
     private NameAdapter adapter;
     private CompositeDisposable compositeDisposable;
@@ -34,21 +31,21 @@ public class MainActivity extends AppCompatActivity {
 
         compositeDisposable = new CompositeDisposable();
 
-        fetchList(false);
-        rvList.setPullToRefreshColor(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
+        fetchList(true);
+//        rvList.setPullToRefreshColor(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
 
 //        rvList.setOnPullToRefreshListener(() -> new Handler().postDelayed(() -> rvList.setListRefreshing(false), 3000));
 //        rvList.setTryAgainListener(() -> fetchList(true));
 
-        Observable<Object> pullToRefresh = rvList.setOnPullToRefreshListener();
-        Observable<Object> tryAgain = rvList.setTryAgainListener();
+//        Observable<Object> pullToRefresh = rvList.setOnPullToRefreshListener();
+//        Observable<Object> tryAgain = rvList.setTryAgainListener();
 
-        if (EmptyUtil.isNotNull(pullToRefresh)) {
+       /* if (EmptyUtil.isNotNull(pullToRefresh)) {
             compositeDisposable.add(pullToRefresh.subscribe(o -> new Handler().postDelayed(() -> rvList.setListRefreshing(false), 3000)));
         }
         if (EmptyUtil.isNotNull(tryAgain)) {
             compositeDisposable.add(tryAgain.subscribe(o -> fetchList(true)));
-        }
+        }*/
     }
 
     private void fetchList(boolean success) {
@@ -74,25 +71,28 @@ public class MainActivity extends AppCompatActivity {
 
         View loadView = getLayoutInflater().inflate(R.layout.custom_view, null);
         ((ImageView) loadView.findViewById(R.id.iv)).setImageResource(R.mipmap.cat);
-        rvList.setCustomLoadingView(loadView);
+//        rvList.setCustomLoadingView(loadView);
 
         View errorView = getLayoutInflater().inflate(R.layout.custom_view, null);
         ((ImageView) errorView.findViewById(R.id.iv)).setImageResource(R.drawable.ic_launcher_background);
-        rvList.setCustomErrorView(errorView);
+//        rvList.setCustomErrorView(errorView);
 
-        rvList.toggleLoading(true);
+//        slLoad.toggleLoading(true);
         new Handler().postDelayed(() -> {
-            rvList.toggleLoading(false);
+//            slLoad.toggleLoading(false);
             if (success) {
-                rvList.setupList(adapter, new LinearLayoutManager(this));
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+//                rvList.setupList(adapter, linearLayoutManager);
+                rvList.setAdapter(adapter);
+                rvList.setLayoutManager(linearLayoutManager);
 
-                Observable<Object> scroll = rvList.setOnScrollListener(10);
+                /*Observable<Object> scroll = rvList.setOnScrollListener(10);
                 if (EmptyUtil.isNotNull(scroll)) {
                     compositeDisposable.add(scroll.subscribe(o -> fetchMore()));
-                }
+                }*/
 //                rvList.setOnScrollListener(10, this::fetchMore);
             } else {
-                rvList.toggleError(true);
+//                slLoad.toggleError(true);
             }
         }, 3000);
     }
