@@ -163,7 +163,7 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
     }
 
     @Override
-    public void setTryAgainListener(OnTryAgainListener onTryAgainListener) {
+    public void setOnTryAgainListener(OnTryAgainListener onTryAgainListener) {
         if (EmptyUtil.isNotNull(presenter)) {
             presenter.onSetTryAgainListener(onTryAgainListener);
         }
@@ -185,7 +185,7 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
 
     @Override
     @Nullable
-    public Observable<Object> setTryAgainListener() {
+    public Observable<Object> setOnTryAgainListener() {
         if (EmptyUtil.isNotNull(presenter)) {
             return presenter.onSetTryAgainListener();
         }
