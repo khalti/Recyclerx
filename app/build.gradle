@@ -34,12 +34,13 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation supportLibrary.appCompat
+    implementation supportLibrary.design
+    implementation ui.stateLayout
     /*ButterKnife*/
     implementation "com.jakewharton:butterknife:${butterKnifeVersion}"
     implementation rx.rxjava
     implementation rx.rxandroid
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterKnifeVersion}"
     implementation project(':recyclerx')
-
-//    implementation "com.khalti:recyclerx:1.1.0"
+//    implementation "com.khalti:recyclerx:1.2.0"
 }
