@@ -41,13 +41,13 @@ public interface RecyclerXProtocols {
 
     void setPullToRefreshColor(int... color);
 
-    void setTryAgainListener(OnTryAgainListener onTryAgainListener);
+    void setOnTryAgainListener(OnTryAgainListener onTryAgainListener);
 
     void setOnScrollListener(int pageQuantum, OnLoadMoreListener onLoadMoreListener);
 
     void setOnPullToRefreshListener(OnPullToRefreshListener onPullToRefreshListener);
 
-    Observable<Object> setTryAgainListener();
+    Observable<Object> setOnTryAgainListener();
 
     Observable<Object> setOnScrollListener(int pageQuantum);
 
