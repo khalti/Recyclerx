@@ -223,10 +223,10 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
         TypedArray typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.app, 0, 0);
         String errorText = typedArray.getString(R.styleable.app_errorText);
         String loadingText = typedArray.getString(R.styleable.app_loadingText);
-        int progressBarColor = typedArray.getInt(R.styleable.app_progressBarColor, R.color.accent);
-        int tryButtonColor = typedArray.getInt(R.styleable.app_tryButtonColor, R.color.primary);
-        int loadingImage = typedArray.getResourceId(R.styleable.app_loadingImage, R.drawable.ic_photo);
-        int errorImage = typedArray.getResourceId(R.styleable.app_errorImage, R.drawable.ic_photo);
+        int progressBarColor = typedArray.getInt(R.styleable.app_progressBarColor, R.color.sl_progress);
+        int tryButtonColor = typedArray.getInt(R.styleable.app_tryButtonColor, R.color.sl_try_again);
+        int loadingImage = typedArray.getResourceId(R.styleable.app_loadingImage, -998);
+        int errorImage = typedArray.getResourceId(R.styleable.app_errorImage, -999);
 
         typedArray.recycle();
 
