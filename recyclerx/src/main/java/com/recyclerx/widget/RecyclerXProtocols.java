@@ -57,5 +57,7 @@ public interface RecyclerXProtocols {
 
     Observable<Object> setOnPullToRefreshListener();
 
+    RecyclerView getRecyclerList();
+
     void onDestroy();
 }

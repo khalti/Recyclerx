@@ -225,6 +225,12 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
     }
 
     @Override
+    @Nullable
+    public android.support.v7.widget.RecyclerView getRecyclerList() {
+        return rvList;
+    }
+
+    @Override
     public void onDestroy() {
         if (EmptyUtil.isNotNull(presenter)) {
             presenter.onDestroy();
