@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout;
-import com.jakewharton.rxbinding2.support.v7.widget.RxRecyclerView;
 import com.recyclerx.R;
 import com.recyclerx.utils.EmptyUtil;
 import com.recyclerx.widget.listeners.OnLoadMoreListener;
@@ -40,7 +39,7 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
     private android.support.v7.widget.RecyclerView rvList;
     private SwipeRefreshLayout srlList;
     private StateLayout slLoad;
-    private View loadingView, errorView;
+    private View loadingView, errorView, tryAgainView;
 
     public RecyclerX(@NonNull Context context) {
         super(context);
@@ -82,6 +81,13 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
     public void togglePullToRefresh(boolean enable) {
         if (EmptyUtil.isNotNull(presenter)) {
             presenter.onPullToRefreshToggled(enable);
+        }
+    }
+
+    @Override
+    public void toggleTryAgain(boolean show) {
+        if (EmptyUtil.isNotNull(presenter)) {
+            presenter.onTryAgainToggled(show);
         }
     }
 
@@ -138,6 +144,14 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
         this.errorView = view;
         if (EmptyUtil.isNotNull(presenter)) {
             presenter.onSetCustomErrorView();
+        }
+    }
+
+    @Override
+    public void setCustomTryAgainButton(View view) {
+        this.tryAgainView = view;
+        if (EmptyUtil.isNotNull(presenter)) {
+            presenter.onSetCustomTryAgainView();
         }
     }
 
@@ -227,6 +241,10 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
         int tryButtonColor = typedArray.getInt(R.styleable.app_tryButtonColor, R.color.sl_try_again);
         int loadingImage = typedArray.getResourceId(R.styleable.app_loadingImage, -998);
         int errorImage = typedArray.getResourceId(R.styleable.app_errorImage, -999);
+        boolean hasTryAgain = typedArray.getBoolean(com.stateLayout.R.styleable.app_has_try_again, true);
+        int tId = typedArray.getResourceId(com.stateLayout.R.styleable.app_custom_try_again, -999);
+        int lId = typedArray.getResourceId(com.stateLayout.R.styleable.app_custom_load, -999);
+        int eId = typedArray.getResourceId(com.stateLayout.R.styleable.app_custom_error, -999);
 
         typedArray.recycle();
 
@@ -246,6 +264,22 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
             presenter.onSetTryButtonColor(tryButtonColor);
             presenter.onSetErrorImage(errorImage);
             presenter.onSetLoadingImage(loadingImage);
+            presenter.onTryAgainToggled(hasTryAgain);
+
+            if (tId > 0) {
+                tryAgainView = LayoutInflater.from(context).inflate(tId, slLoad, false);
+                presenter.onSetCustomTryAgainView();
+            }
+
+            if (lId > 0) {
+                loadingView = LayoutInflater.from(context).inflate(lId, slLoad, false);
+                presenter.onSetCustomLoadingView();
+            }
+
+            if (eId > 0) {
+                errorView = LayoutInflater.from(context).inflate(eId, slLoad, false);
+                presenter.onSetCustomErrorView();
+            }
         }
     }
 
@@ -280,6 +314,11 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
         }
 
         @Override
+        public void toggleTryAgain(boolean show) {
+            slLoad.toggleTryAgain(show);
+        }
+
+        @Override
         public void setErrorText(String text) {
             slLoad.setErrorText(text);
         }
@@ -307,6 +346,11 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
         @Override
         public void setCustomErrorView() {
             slLoad.setCustomErrorView(errorView);
+        }
+
+        @Override
+        public void setCustomTryAgainView() {
+            slLoad.setCustomTryAgainButton(tryAgainView);
         }
 
         @Override
@@ -338,7 +382,7 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
         public Observable<HashMap<String, Integer>> addListScrollListener() {
             PublishSubject<HashMap<String, Integer>> scrollListener = PublishSubject.create();
 
-            compositeDisposable.add(RxRecyclerView.scrollEvents(rvList)
+            /*compositeDisposable.add(RxRecyclerView.scrollEvents(rvList)
                     .subscribe(recyclerViewScrollEvent -> {
                         if (recyclerViewScrollEvent.dy() > 0) {
                             int fp = 0;
@@ -353,7 +397,27 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
                                 put("total_item_count", layoutManager.getItemCount());
                             }});
                         }
-                    }));
+                    }));*/
+
+            rvList.addOnScrollListener(new android.support.v7.widget.RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(android.support.v7.widget.RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    if (dy > 0) {
+                        int fp = 0;
+                        if (layoutManager instanceof LinearLayoutManager) {
+                            fp = ((LinearLayoutManager) layoutManager).findFirstVisibleItemPosition();
+                        }
+                        int finalFp = fp;
+                        scrollListener.onNext(new HashMap<String, Integer>() {{
+                            put("dy", dy);
+                            put("past_visible_items", finalFp);
+                            put("visible_item_count", layoutManager.getChildCount());
+                            put("total_item_count", layoutManager.getItemCount());
+                        }});
+                    }
+                }
+            });
             return scrollListener;
         }
 

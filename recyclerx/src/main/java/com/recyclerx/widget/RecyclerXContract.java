@@ -19,6 +19,8 @@ public interface RecyclerXContract {
 
         void togglePullToRefresh(boolean enable);
 
+        void toggleTryAgain(boolean show);
+
         void setErrorText(String text);
 
         void setLoadingText(String text);
@@ -30,6 +32,8 @@ public interface RecyclerXContract {
         void setCustomLoadingView();
 
         void setCustomErrorView();
+
+        void setCustomTryAgainView();
 
         void setProgressBarColor(int color);
 
@@ -64,6 +68,8 @@ public interface RecyclerXContract {
 
         void onPullToRefreshToggled(boolean enable);
 
+        void onTryAgainToggled(boolean show);
+
         void onSetErrorText(String text);
 
         void onSetLoadingText(String text);
@@ -75,6 +81,8 @@ public interface RecyclerXContract {
         void onSetCustomLoadingView();
 
         void onSetCustomErrorView();
+
+        void onSetCustomTryAgainView();
 
         void onSetProgressBarColor(int color);
 

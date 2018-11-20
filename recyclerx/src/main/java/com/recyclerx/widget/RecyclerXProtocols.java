@@ -19,6 +19,8 @@ public interface RecyclerXProtocols {
 
     void togglePullToRefresh(boolean enable);
 
+    void toggleTryAgain(boolean show);
+
     boolean isListRefreshing();
 
     void setListRefreshing(boolean refreshing);
@@ -34,6 +36,8 @@ public interface RecyclerXProtocols {
     void setCustomLoadingView(View view);
 
     void setCustomErrorView(View view);
+
+    void setCustomTryAgainButton(View view);
 
     void setProgressBarColor(int color);
 
