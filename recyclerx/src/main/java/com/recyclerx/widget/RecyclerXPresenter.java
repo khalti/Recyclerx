@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.recyclerx.utils.EmptyUtil;
 import com.recyclerx.utils.GuavaUtil;
+import com.recyclerx.utils.LogUtil;
 import com.recyclerx.widget.listeners.OnLoadMoreListener;
 import com.recyclerx.widget.listeners.OnPullToRefreshListener;
 import com.recyclerx.widget.listeners.OnTryAgainListener;
@@ -45,6 +46,11 @@ public class RecyclerXPresenter implements RecyclerXContract.Presenter {
     }
 
     @Override
+    public void onTryAgainToggled(boolean show) {
+        view.toggleTryAgain(show);
+    }
+
+    @Override
     public void onSetErrorText(String text) {
         view.setErrorText(text);
     }
@@ -72,6 +78,11 @@ public class RecyclerXPresenter implements RecyclerXContract.Presenter {
     @Override
     public void onSetCustomErrorView() {
         view.setCustomErrorView();
+    }
+
+    @Override
+    public void onSetCustomTryAgainView() {
+        view.setCustomTryAgainView();
     }
 
     @Override
@@ -136,6 +147,7 @@ public class RecyclerXPresenter implements RecyclerXContract.Presenter {
             int totalItemCount = map.get("total_item_count");
 
             if (totalItemCount > pageQuantum && (visibleItemCount + pastVisibleItems) >= totalItemCount) {
+                LogUtil.checkpoint("load more");
                 listScrollPublish.onNext("");
             }
         }));

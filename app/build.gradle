@@ -41,6 +41,6 @@ dependencies {
     implementation rx.rxjava
     implementation rx.rxandroid
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterKnifeVersion}"
-    implementation project(':recyclerx')
-//    implementation "com.khalti:recyclerx:1.2.0"
+//    implementation project(':recyclerx')
+    implementation "com.khalti:recyclerx:1.05.00"
 }

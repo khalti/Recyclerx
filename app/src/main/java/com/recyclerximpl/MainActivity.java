@@ -76,20 +76,20 @@ public class MainActivity extends AppCompatActivity {
         rvList.setCustomErrorView(errorView);*/
 
         rvList.toggleLoading(true);
-        new Handler().postDelayed(() -> {
-            rvList.toggleLoading(false);
-            if (success) {
-                rvList.setupList(adapter, new LinearLayoutManager(this));
+//        new Handler().postDelayed(() -> {
+        rvList.toggleLoading(false);
+        if (success) {
+            rvList.setupList(adapter, new LinearLayoutManager(this));
 
-                Observable<Object> scroll = rvList.setOnScrollListener(10);
-                if (EmptyUtil.isNotNull(scroll)) {
-                    compositeDisposable.add(scroll.subscribe(o -> fetchMore()));
-                }
-//                rvList.setOnScrollListener(10, this::fetchMore);
-            } else {
-                rvList.toggleError(true);
+            Observable<Object> scroll = rvList.setOnScrollListener(10);
+            if (EmptyUtil.isNotNull(scroll)) {
+                compositeDisposable.add(scroll.subscribe(o -> fetchMore()));
             }
-        }, 3000);
+//                rvList.setOnScrollListener(10, this::fetchMore);
+        } else {
+            rvList.toggleError(true);
+        }
+//        }, 3000);
     }
 
     private void fetchMore() {

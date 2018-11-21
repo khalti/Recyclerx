@@ -2,12 +2,12 @@ ext {
     appVersionCode = 10000
     appVersionName = "1.0.0"
 
-    libraryVersionCode = 10400
-    libraryVersionName = "1.4.0"
+    libraryVersionCode = 1005000
+    libraryVersionName = "1.05.00"
 
-    compileSdk = 27
-    buildToolVersion = '27.0.3'
+    compileSdk = 28
+    buildToolVersion = '28.0.3'
     minSdk = 14
-    targetSdk = 27
+    targetSdk = 28
     renderScriptTarget = 20
 }
