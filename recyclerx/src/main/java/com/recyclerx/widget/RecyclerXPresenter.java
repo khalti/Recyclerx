@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 
 import com.recyclerx.utils.EmptyUtil;
 import com.recyclerx.utils.GuavaUtil;
-import com.recyclerx.utils.LogUtil;
 import com.recyclerx.widget.listeners.OnLoadMoreListener;
 import com.recyclerx.widget.listeners.OnPullToRefreshListener;
 import com.recyclerx.widget.listeners.OnTryAgainListener;
@@ -147,7 +146,6 @@ public class RecyclerXPresenter implements RecyclerXContract.Presenter {
             int totalItemCount = map.get("total_item_count");
 
             if (totalItemCount > pageQuantum && (visibleItemCount + pastVisibleItems) >= totalItemCount) {
-                LogUtil.checkpoint("load more");
                 listScrollPublish.onNext("");
             }
         }));
