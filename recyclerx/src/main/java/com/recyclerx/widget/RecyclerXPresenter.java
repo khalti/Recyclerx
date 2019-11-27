@@ -100,6 +100,11 @@ public class RecyclerXPresenter implements RecyclerXContract.Presenter {
     }
 
     @Override
+    public void onSetTryButtonText(String text) {
+        view.setTryButtonText(text);
+    }
+
+    @Override
     public boolean onGetRefreshingStatus() {
         return view.isListRefreshing();
     }

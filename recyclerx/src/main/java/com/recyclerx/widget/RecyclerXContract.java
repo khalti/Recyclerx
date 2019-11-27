@@ -39,6 +39,8 @@ public interface RecyclerXContract {
 
         void setTryButtonColor(int color);
 
+        void setTryButtonText(String text);
+
         void setPullToRefreshColor(int... color);
 
         boolean isListRefreshing();
@@ -89,6 +91,8 @@ public interface RecyclerXContract {
         void onSetTryButtonColor(int color);
 
         void onSetPullToRefreshColor(int... color);
+
+        void onSetTryButtonText(String text);
 
         boolean onGetRefreshingStatus();
 

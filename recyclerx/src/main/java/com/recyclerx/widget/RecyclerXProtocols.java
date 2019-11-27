@@ -43,6 +43,8 @@ public interface RecyclerXProtocols {
 
     void setTryButtonColor(int color);
 
+    void setTryButtonText(String text);
+
     void setPullToRefreshColor(int... color);
 
     void setOnTryAgainListener(OnTryAgainListener onTryAgainListener);

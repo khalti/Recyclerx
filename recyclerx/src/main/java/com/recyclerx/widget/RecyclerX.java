@@ -170,6 +170,13 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
     }
 
     @Override
+    public void setTryButtonText(String text) {
+        if (EmptyUtil.isNotNull(presenter)) {
+            presenter.onSetTryButtonText(text);
+        }
+    }
+
+    @Override
     public void setPullToRefreshColor(int... color) {
         if (EmptyUtil.isNotNull(presenter)) {
             presenter.onSetPullToRefreshColor(color);
@@ -259,9 +266,9 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
         if (EmptyUtil.isNotNull(inflater)) {
             mainView = inflater.inflate(R.layout.recyclerview, this, true);
 
-            rvList = mainView.findViewById(R.id.rxList);
-            slLoad = mainView.findViewById(R.id.slLoad);
-            srlList = mainView.findViewById(R.id.srlList);
+            rvList = mainView.findViewById(R.id.recyclerX_rxList);
+            slLoad = mainView.findViewById(R.id.recyclerX_slLoad);
+            srlList = mainView.findViewById(R.id.recyclerX_srlList);
 
             presenter = new RecyclerView().getPresenter();
             presenter.onSetErrorText(errorText);
@@ -367,6 +374,13 @@ public class RecyclerX extends FrameLayout implements RecyclerXProtocols {
         @Override
         public void setTryButtonColor(int color) {
             slLoad.setTryButtonColor(color);
+        }
+
+        @Override
+        public void setTryButtonText(String text) {
+            if (EmptyUtil.isNotNull(slLoad)) {
+                slLoad.setButtonText(text);
+            }
         }
 
         @Override
